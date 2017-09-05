@@ -77,7 +77,7 @@ def get_posts():
 
 @app.route('/reddit-manager/')
 def init():
-    print 'hello'
+    print('hello')
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,11 +1,11 @@
 import praw
-import praw.errors
+#import praw.errors
 import os, sys
 
 from pymongo import MongoClient
 
 if __name__ == '__main__':
-    user = sys.argv[0]
+    user = sys.argv[1]
 
     reddit = praw.Reddit('bot1', user_agent='RedditSaveManager:v1.0 by /u/elihusmails')
 
