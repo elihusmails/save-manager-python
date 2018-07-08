@@ -21,7 +21,7 @@ class RedditSaverDatabase:
     def get_all( self ):
         with sqlite3.connect(self.db_filename) as conn:
             cursor = conn.cursor()
-            cursor.execute('SELECT * FROM redditsaves');
+            cursor.execute('SELECT * FROM redditsaves')
 
             retval = []
 
@@ -62,7 +62,7 @@ class RedditSaverDatabase:
     def get_subreddit_message( self, msgid ):
          with sqlite3.connect(self.db_filename) as conn:
             cursor = conn.cursor()
-            cursor.execute('SELECT * FROM redditsaves WHERE reddit_id = ?', (subreddit,))
+            cursor.execute('SELECT * FROM redditsaves WHERE reddit_id = ?', (msgid,))
             retval = []
             for row in cursor.fetchall():
                 rid, title, permalink, subreddit = row 
@@ -73,17 +73,17 @@ class RedditSaverDatabase:
 
             return retval
 
-    def get_subreddit_msg_count( self, subreddit ):
+    def get_subreddit_msg_count( self ):
           with sqlite3.connect(self.db_filename) as conn:
             cursor = conn.cursor()
-            cursor.execute('SELECT COUNT(*) FROM redditsaves WHERE subreddit = ?', (subreddit,))
+            cursor.execute('SELECT subreddit, COUNT(*) AS count FROM redditsaves GROUP BY subreddit')
             retval = []
             for row in cursor.fetchall():
-                rid, title, permalink, subreddit = row 
-                retval.append( {'_id': rid,
-                    'title': title,
-                    'permalink': permalink,
-                    'subreddit': subreddit} )
+                subreddit,count = row 
+                retval.append( {
+                    'subreddit': subreddit,
+                    'count': count
+                    } )
 
             return retval       
 

@@ -20,22 +20,8 @@ class ProcessSaves:
         for save in saves:
 
             if hasattr(save, 'title'):
-                record = {
-                    "_id": save.id,
-                    "subreddit": save.subreddit.display_name,
-                    "title": save.title,
-                    "permalink": save.permalink
-                }
-
                 database.insert_saved_thing(save.id, save.subreddit.display_name, save.title, save.permalink)
             else:
                 # submissions that get here are links to comments
-                record = {
-                    "_id": save.id,
-                    "subreddit": save.subreddit.display_name,
-                    "title": save.link_title,
-                    "permalink": save.submission.permalink
-                }
-
                 database.insert_saved_thing(save.id, save.subreddit.display_name, save.link_title, save.submission.permalink)
 
